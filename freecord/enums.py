@@ -1,7 +1,4 @@
-from enum import IntEnum
-
-
-class ApplicationCommandType(IntEnum):
+class ApplicationCommandType:
     """
     An enumerable object representing the types of application commands.
     :ivar CHAT_INPUT: 1
@@ -16,7 +13,7 @@ class ApplicationCommandType(IntEnum):
     AUTOCOMPLETE = 4
 
 
-class InteractionType(IntEnum):
+class InteractionType:
     """
     An enumerable object representing the types of interactions.
     :ivar PING: 1
@@ -33,7 +30,7 @@ class InteractionType(IntEnum):
     MODAL_SUBMIT = 5
 
 
-class InteractionCallbackType(IntEnum):
+class InteractionCallbackType:
     """
     An enumerable object representing the callback types of interaction responses.
     :ivar PONG: 1
@@ -54,7 +51,7 @@ class InteractionCallbackType(IntEnum):
     MODAL = 9
 
 
-class OptionType(IntEnum):
+class OptionType:
     """
     An enumerable object representing the types of an application command option.
     :ivar SUB_COMMAND: 1
@@ -83,7 +80,7 @@ class OptionType(IntEnum):
     ATTACHMENT = 11
 
 
-class PermissionType(IntEnum):
+class PermissionType:
     """
     Enumerable object of literal integers holding equivocal values of a slash command's permission(s).
     :ivar ROLE: 1
@@ -96,7 +93,7 @@ class PermissionType(IntEnum):
     CHANNEL = 3
 
 
-class ComponentType(IntEnum):
+class ComponentType:
     """
     An enumerable object representing the types of a component.
     :ivar ACTION_ROW: 1
@@ -111,7 +108,7 @@ class ComponentType(IntEnum):
     INPUT_TEXT = 4
 
 
-class ButtonStyle(IntEnum):
+class ButtonStyle:
     """
     An enumerable object representing the styles of button components.
     :ivar PRIMARY: 1
@@ -128,7 +125,7 @@ class ButtonStyle(IntEnum):
     LINK = 5
 
 
-class TextStyleType(IntEnum):
+class TextStyleType:
     """
     An enumerable object representing the styles of text inputs.
     :ivar SHORT: 1

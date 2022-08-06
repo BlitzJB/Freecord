@@ -13,14 +13,9 @@ class Client:
         """
             Registers a command
         """
-        print(name)
-        def wrapper(callback: FunctionType):
-            if not name:
-                name = callback.__name__
 
-            if not description:
-                description = ''
-            
+        def wrapper(callback: FunctionType):
+
             if name in self._callbacks:
                 raise Exception(f"Command function with name `{name}` has already been defined!")
 
