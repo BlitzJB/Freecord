@@ -6,25 +6,33 @@ from .models import ApplicationContext, ApplicationCommand
 
 class Client:
     def __init__(self) -> None:
-        self.__callbacks = {}
+        self._callbacks = {}
 
 
-    def command(self, callback: FunctionType, options, scope = None) -> None:
+    def command(self, name: str = None, description: str = None, options = [], scope = None) -> None:
         """
             Registers a command
         """
+        print(name)
+        def wrapper(callback: FunctionType):
+            if not name:
+                name = callback.__name__
 
-        if callback.__name__ in self.__callbacks:
-            raise Exception(f"Command function with name `{callback.__name__}` has already been defined!")
-        
-        self.__callbacks[callback.__name__] : Dict[str, ApplicationCommand] = ApplicationCommand(callback, options, scope)
+            if not description:
+                description = ''
+            
+            if name in self._callbacks:
+                raise Exception(f"Command function with name `{name}` has already been defined!")
+
+            self._callbacks[name]: Dict[str, ApplicationCommand] = ApplicationCommand(callback, name, description, options, scope)
+        return wrapper
 
 
     def _register_commands(self, application_context: ApplicationContext):
         """
             Regsiters all the added comands with discord
         """
-        commands: List[ApplicationCommand] = list(self.__callbacks.values())
+        commands: List[ApplicationCommand] = list(self._callbacks.values())
         register_tasks = [command.create_register_task(application_context) for command in commands]
         # TODO Execute async and retry failed
 
@@ -35,6 +43,10 @@ class Client:
         self._register_commands(context)
         self._server.run(host, port)
         
+
+    def _seialized(self):
+        return [command.serialize() for command in self._callbacks.values()]
+
 
 if __name__ == '__main__':
     client = Client()
