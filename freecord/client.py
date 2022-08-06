@@ -1,5 +1,5 @@
 from types import FunctionType
-from typing import List
+from typing import Dict, List
 
 from .server import build_flask_app
 from .models import ApplicationContext, ApplicationCommand
@@ -9,7 +9,7 @@ class Client:
         self.__callbacks = {}
 
 
-    def command(self, callback: FunctionType, scope = None) -> None:
+    def command(self, callback: FunctionType, options, scope = None) -> None:
         """
             Registers a command
         """
@@ -17,7 +17,7 @@ class Client:
         if callback.__name__ in self.__callbacks:
             raise Exception(f"Command function with name `{callback.__name__}` has already been defined!")
         
-        self.__callbacks[callback.__name__] = ApplicationCommand(callback, scope)
+        self.__callbacks[callback.__name__] : Dict[str, ApplicationCommand] = ApplicationCommand(callback, options, scope)
 
 
     def _register_commands(self, application_context: ApplicationContext):
@@ -30,10 +30,10 @@ class Client:
 
 
     def run(self, token, application_id, public_key, host='0.0.0.0', port=5000):
-        self.__server = build_flask_app(public_key)
+        self._server = build_flask_app(public_key)
         context = ApplicationContext(token, application_id, public_key)
         self._register_commands(context)
-        self.__server.run(host, port)
+        self._server.run(host, port)
         
 
 if __name__ == '__main__':
