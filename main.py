@@ -6,7 +6,7 @@ from freecord.enums import OptionType
 client = Client()
 
 @client.command(
-    name='new',
+    name='new_cmd',
     description='This is an awesome command',
     options=[
         Option(
