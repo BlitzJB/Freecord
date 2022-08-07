@@ -1,4 +1,3 @@
-from atexit import register
 from types import FunctionType
 from typing import Dict, List
 import aiohttp, asyncio
