@@ -37,11 +37,10 @@ class Client:
         # TODO Execute async and retry failed
 
 
-    def run(self, token, application_id, public_key, host='0.0.0.0', port=5000):
-        self._server = build_flask_app(public_key)
+    def run(self, token, application_id, public_key):
         context = ApplicationContext(token, application_id, public_key)
         self._register_commands(context)
-        self._server.run(host, port) 
+        return build_flask_app(public_key)
         
 
     def _seialized(self):

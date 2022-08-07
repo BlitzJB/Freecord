@@ -10,6 +10,7 @@ def build_flask_app(public_key):
     @verify_key_decorator(public_key)
     def interactions():
         if request.json['type'] == InteractionType.APPLICATION_COMMAND:
+            print('command_triggered', dict(request.json))
             return jsonify({
                 'type': InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
                 'data': {
