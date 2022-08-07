@@ -14,7 +14,7 @@ def build_flask_app(public_key):
             return jsonify({
                 'type': InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
                 'data': {
-                    'content': str(dict(request.json))
+                    'content': 'str(dict(request.json))'
                 }
             })
     
