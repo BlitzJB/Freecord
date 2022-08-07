@@ -6,7 +6,7 @@ from freecord.enums import OptionType
 client = Client()
 
 @client.command(
-    name='imagined_commadn',
+    name='new',
     description='This is an awesome command',
     options=[
         Option(
@@ -15,6 +15,7 @@ client = Client()
             type=OptionType.BOOLEAN
         )
     ],
+    scope=991603793185738792
 )
 def functionname(ctx, first):
     ...
