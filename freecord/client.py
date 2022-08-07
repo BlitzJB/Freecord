@@ -37,8 +37,12 @@ class Client:
 
 
     def run(self, token, application_id, public_key):
-        context = ApplicationContext(token, application_id, public_key)
-        self._register_commands(context)
+
+        async def register():
+            context = ApplicationContext(token, application_id, public_key)
+            self._register_commands(context)
+
+        asyncio.run(register())
         return build_flask_app(public_key)
         
 
