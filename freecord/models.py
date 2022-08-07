@@ -23,10 +23,10 @@ class ApplicationCommand:
         self.json = self.serialize()
 
         if self.scope: 
-            register_as_guild_command(session, self.json, application_ctx.application_id, application_ctx.token, self.scope)
+            await register_as_guild_command(session, self.json, application_ctx.application_id, application_ctx.token, self.scope)
             return
 
-        register_as_global_command(session, self.json, application_ctx.application_id, application_ctx.token)
+        await register_as_global_command(session, self.json, application_ctx.application_id, application_ctx.token)
 
     
     def serialize(self):

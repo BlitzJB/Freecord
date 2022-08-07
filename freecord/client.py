@@ -1,5 +1,7 @@
+from atexit import register
 from types import FunctionType
 from typing import Dict, List
+import aiohttp, asyncio
 
 from .server import build_flask_app
 from .models import ApplicationContext, ApplicationCommand
@@ -23,12 +25,15 @@ class Client:
         return wrapper
 
 
-    def _register_commands(self, application_context: ApplicationContext):
+    async def _register_commands(self, application_context: ApplicationContext):
         """
             Regsiters all the added comands with discord
         """
         commands: List[ApplicationCommand] = list(self._callbacks.values())
-        register_tasks = [command.create_register_task(application_context) for command in commands]
+        async with aiohttp.ClientSession() as session:
+            register_tasks = [command.create_register_task(session, application_context) for command in commands]
+            output = await asyncio.gather(*register_tasks)
+        print(output)
         # TODO Execute async and retry failed
 
 
@@ -36,7 +41,7 @@ class Client:
         self._server = build_flask_app(public_key)
         context = ApplicationContext(token, application_id, public_key)
         self._register_commands(context)
-        self._server.run(host, port)
+        self._server.run(host, port) 
         
 
     def _seialized(self):
@@ -44,8 +49,4 @@ class Client:
 
 
 if __name__ == '__main__':
-    client = Client()
-
-    @client.command(scope=1823818238)
-    def fun():
-        print('fun')
+    ...
